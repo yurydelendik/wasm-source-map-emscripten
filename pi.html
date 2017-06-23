@@ -1,0 +1,29 @@
+<!doctype html>
+<!-- Any copyright is dedicated to the Public Domain.
+   - http://creativecommons.org/publicdomain/zero/1.0/ -->
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Emscripten-Generated WebAssembly source maps example</title>
+  </head>
+  <body>
+    <div id="output"></div>
+
+    <script type='text/javascript'>
+      var Module = {
+        preRun: [],
+        postRun: [],
+      };
+
+      Module.postRun.push(function () {
+        var size = 100;
+        var ptr = Module.getMemory(size);
+        var n = Module._get_pi(ptr, size);
+        var str = String.fromCharCode.apply(null, Module.HEAPU8.subarray(ptr, ptr + n));
+        document.getElementById('output').textContent = "\u03C0 = " + str;
+      });
+    </script>
+    <script async type="text/javascript" src="pi.js"></script>
+  </body>
+</html>
